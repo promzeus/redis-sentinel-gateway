@@ -1,4 +1,9 @@
+
 # Redis Sentinel Gateway 🚀
+
+<p align="center">
+  <img src="https://github.com/promzeus/redis-sentinel-gateway/blob/cfacd86da118b676b5b06d428f367a72630447ea/assets/logo.jpg" alt="Logo">
+</p>
 
 **Redis Sentinel Gateway** is a lightweight Go application designed to monitor Redis Sentinel for master node changes and automatically update Kubernetes Endpoints based on these changes. It simplifies the failover process by serving as a single point of entry for Redis, allowing clients to avoid dealing with Sentinel logic directly.
 
@@ -18,19 +23,21 @@
 
 The application is fully configurable via environment variables:
 
-| Environment Variable | Description                                          | Default Value         |
-|----------------------|------------------------------------------------------|-----------------------|
-| `SERVICE_NAME`        | Name of the Kubernetes service                      | `redis-failover`      |
-| `SENTINEL_ADDR`       | Address of the Redis Sentinel                        | `rfs-redis-node:26379`|
-| `MASTER_NAME`         | Name of the Redis master in Sentinel                 | `mymaster`            |
-| `NAMESPACE`           | Kubernetes namespace (auto-detected if not set)      | Auto-detected         |
-| `POLL_INTERVAL`       | Interval between Kubernetes Endpoint updates         | `10s`                 |
-| `TICK_INTERVAL`       | Interval for checking master node changes            | `1s`                  |
-| `LEASE_NAME`          | Name of the Kubernetes lease for leader election     | `redis-failover-lease`|
-| `PORT_NAME`           | Name of the port for the service                     | `redis`               |
-| `PORT_NUMBER`         | Port number for the service                          | `6379`                |
-| `REDIS_PASSWORD`      | Password for connecting to Redis Sentinel            | None                  |
-| `HOSTNAME`            | Pod's hostname, used as a unique identifier          | Auto-detected         |
+| Environment Variable        | Description                                          | Default Value         |
+|-----------------------------|------------------------------------------------------|-----------------------|
+| `SERVICE_NAME`               | Name of the Kubernetes service                      | `redis-failover`      |
+| `SENTINEL_ADDR`              | Address of the Redis Sentinel                        | `rfs-redis-node:26379`|
+| `MASTER_NAME`                | Name of the Redis master in Sentinel                 | `mymaster`            |
+| `NAMESPACE`                  | Kubernetes namespace (auto-detected if not set)      | Auto-detected         |
+| `POLL_INTERVAL`              | Interval between Kubernetes Endpoint updates         | `10s`                 |
+| `TICK_INTERVAL`              | Interval for checking master node changes            | `1s`                  |
+| `LEASE_NAME`                 | Name of the Kubernetes lease for leader election     | `redis-failover-lease`|
+| `PORT_NAME`                  | Name of the port for the service                     | `redis`               |
+| `PORT_NUMBER`                | Port number for the service                          | `6379`                |
+| `REDIS_PASSWORD`             | Password for connecting to Redis Sentinel            | None                  |
+| `REDIS_PASSWORD_SECRET_NAME` | Secret name for Redis password                       | `redis-sentinel-server`|
+| `REDIS_PASSWORD_KEY`         | Key in the secret for Redis password                 | `redis-password`      |
+| `HOSTNAME`                   | Pod's hostname, used as a unique identifier          | Auto-detected         |
 
 ## ⚙️ How It Works
 
@@ -45,8 +52,44 @@ The application is fully configurable via environment variables:
 
 To install the Redis Sentinel Gateway via Helm, follow these steps:
 
-.....>>> next time
+1. **Add the Helm repository**:
 
-<p align="center">
-  <img src="https://github.com/promzeus/redis-sentinel-gateway/blob/cfacd86da118b676b5b06d428f367a72630447ea/assets/logo.jpg" alt="Logo">
-</p>
+    ```bash
+    helm repo add redis-gateway https://promzeus.github.io/redis-sentinel-gateway
+    ```
+
+2. **Install the chart**:
+
+    ```bash
+    helm install redis-sentinel-gateway redis-gateway/redis-sentinel-gateway --namespace redis --create-namespace
+    ```
+
+3. **Upgrade the chart**:
+
+    If you need to update the application with new changes, simply run:
+
+    ```bash
+    helm upgrade redis-sentinel-gateway redis-gateway/redis-sentinel-gateway --namespace redis
+    ```
+
+### Customizing the installation:
+
+You can override the default values for the chart by passing your own `values.yaml` file. For example:
+
+```bash
+helm install redis-sentinel-gateway redis-gateway/redis-sentinel-gateway --namespace redis --create-namespace -f values.yaml
+```
+
+### Kubernetes
+
+You can also manually deploy the Redis Sentinel Gateway to your Kubernetes cluster by applying the necessary RBAC and deployment configurations.
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔗 Links
+
+- [GitHub Repository](https://github.com/promzeus/redis-sentinel-gateway)
+- [Docker Hub Repository](https://hub.docker.com/r/promzeus/redis-sentinel-gateway)
+- [Helm Chart Repository](https://promzeus.github.io/redis-sentinel-gateway)

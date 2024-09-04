@@ -1,0 +1,8 @@
+apiVersion: artifacthub.io/v1
+kind: Repository
+name: "Redis Sentinel Gateway"
+displayName: "Redis Sentinel Gateway"
+description: "Helm chart for deploying Redis Sentinel Gateway"
+homeURL: "https://github.com/promzeus/redis-sentinel-gateway"
+iconURL: "https://github.com/promzeus/redis-sentinel-gateway/blob/main/assets/logo.jpg"
+repositoryID: "047a44e2-2db7-412f-96f8-d219079e7e64"

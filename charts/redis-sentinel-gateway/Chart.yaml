@@ -29,7 +29,7 @@ keywords:
   - endpoint
   - operator
 
-icon: https://github.com/promzeus/redis-sentinel-gateway/blob/cfacd86da118b676b5b06d428f367a72630447ea/assets/logo.jpg
+icon: https://promzeus.github.io/redis-sentinel-gateway/assets/logo.jpg
 
 # Annotations to help users understand the chart
 annotations:

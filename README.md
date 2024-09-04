@@ -46,3 +46,7 @@ The application is fully configurable via environment variables:
 To install the Redis Sentinel Gateway via Helm, follow these steps:
 
 .....>>> next time 
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/promzeus/redis-sentinel-gateway/main/assets/logo.jpg" alt="Логотип">
+</p>

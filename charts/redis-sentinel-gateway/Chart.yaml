@@ -1,0 +1,36 @@
+apiVersion: v2
+name: redis-sentinel-gateway
+description: A Helm chart for deploying Redis Sentinel Gateway to monitor master node changes and manage Kubernetes Endpoints.
+version: 1.0.0
+appVersion: "1.0.0"
+
+# The URL of the chart repository
+home: https://github.com/promzeus/redis-sentinel-gateway
+
+# List of maintainers for the chart
+maintainers:
+  - name: Dmytro Onyshko
+    email: promzeus@gmail.com
+    url: https://github.com/promzeus
+
+# List of chart dependencies (if any)
+dependencies: []
+
+# Source code repository
+sources:
+  - https://github.com/promzeus/redis-sentinel-gateway
+
+keywords:
+  - redis
+  - sentinel
+  - gateway
+  - failover
+  - kubernetes
+  - endpoint
+
+icon: https://raw.githubusercontent.com/promzeus/redis-sentinel-gateway/main/assets/logo.jpg
+
+# Annotations to help users understand the chart
+annotations:
+  category: "Monitoring"
+  license: "MIT"

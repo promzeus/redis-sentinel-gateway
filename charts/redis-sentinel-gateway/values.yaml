@@ -1,0 +1,48 @@
+replicaCount: 2
+
+# Environment variables for the application
+env:
+  SERVICE_NAME: "redis-failover"
+  SENTINEL_ADDR: "redis-sentinel-server:26379"
+  MASTER_NAME: "mymaster"
+  NAMESPACE: "redis"
+  LEASE_NAME: "redis-failover-lease"
+  POLL_INTERVAL: "5s"  # Poll interval for checking Redis Sentinel changes
+  TICK_INTERVAL: "1s"  # Interval for checking if an update needs to be applied
+  REDIS_PASSWORD_SECRET_NAME: "redis-sentinel-server"  # Default secret name for Redis password
+  REDIS_PASSWORD_KEY: "redis-password"  # Default key in the secret for Redis password
+  REDIS_PASSWORD: ""  # Direct Redis password (if not using a secret)
+
+# Resource requests and limits for the container
+resources:
+  requests:
+    cpu: "50m"
+    memory: "60Mi"
+    ephemeral-storage: "500Mi"
+  limits:
+    cpu: "100m"
+    memory: "60Mi"
+    ephemeral-storage: "500Mi"
+
+# Labels for the pods
+podlabels: {}
+# Annotations for the pods
+podAnnotations: {}
+
+# Node selector for scheduling the pods on specific nodes
+nodeSelector: {}
+  # Services: redis
+
+# Tolerations for the pods
+tolerations: {}
+# - key: "name"
+#   effect: "NoSchedule"
+
+# Image configuration
+image:
+  repository: "promzeus/redis-sentinel-gateway"
+  tag: "v1"
+  pullPolicy: "Always"
+
+# Service account name
+serviceAccountName: ""

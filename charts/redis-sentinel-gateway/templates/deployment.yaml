@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+    {{- include ".labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        {{- include ".labels" . | nindent 8 }}
+      annotations:
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "redis-sentinel-gateway.serviceAccountName" . }}
+      containers:
+      - name: redis-sentinel-failover
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+          - name: SERVICE_NAME
+            value: {{ .Values.env.SERVICE_NAME }}
+          - name: SENTINEL_ADDR
+            value: {{ .Values.env.SENTINEL_ADDR }}
+          - name: MASTER_NAME
+            value: {{ .Values.env.MASTER_NAME }}
+          - name: LEASE_NAME
+            value: {{ .Values.env.LEASE_NAME }}
+          - name: POLL_INTERVAL
+            value: {{ .Values.env.POLL_INTERVAL }}
+          - name: TICK_INTERVAL
+            value: {{ .Values.env.TICK_INTERVAL }}
+
+          {{- if .Values.env.REDIS_PASSWORD }}
+          - name: REDIS_PASSWORD
+            value: {{ .Values.env.REDIS_PASSWORD }}
+          {{- else }}
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.env.REDIS_PASSWORD_SECRET_NAME }}
+                key: {{ .Values.env.REDIS_PASSWORD_KEY }}
+          {{- end }}
+          
+        resources:
+          requests:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
+            ephemeral-storage: {{ .Values.resources.requests["ephemeral-storage"] }}
+          limits:
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
+            ephemeral-storage: {{ .Values.resources.limits["ephemeral-storage"] }}
+        ports:
+        - containerPort: 6379
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}

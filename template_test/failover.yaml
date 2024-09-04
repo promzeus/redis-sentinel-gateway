@@ -1,0 +1,85 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: redis
+  name: redis-sentinel-failover-role
+rules:
+- apiGroups: [""]
+  resources: ["endpoints", "services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: redis
+  name: redis-sentinel-failover-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: redis-sentinel-failover-role
+subjects:
+- kind: ServiceAccount
+  name: redis-sentinel-failover-sa
+  namespace: redis
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: redis-sentinel-failover-sa
+  namespace: redis
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-sentinel-failover
+  namespace: redis
+  labels:
+    app: redis-sentinel-failover
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: redis-sentinel-failover
+  template:
+    metadata:
+      labels:
+        app: redis-sentinel-failover
+    spec:
+      serviceAccountName: redis-sentinel-failover-sa
+      imagePullSecrets:
+        - name: registry-credentials
+      containers:
+      - name: redis-sentinel-failover
+        image: promzeus/redis-sentinel-gateway:v1
+        imagePullPolicy: Always
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-sentinel-server
+              key: redis-password
+        - name: SERVICE_NAME
+          value: "redis-failover"
+        - name: SENTINEL_ADDR
+          value: "redis-sentinel-server:26379"
+        - name: MASTER_NAME
+          value: "redis-master-sentinel"
+        - name: LEASE_NAME
+          value: "redis-failover-lease"
+        - name: PORT_NAME
+          value: "redis"
+        - name: PORT_NUMBER
+          value: "6379"
+        - name: POLL_INTERVAL
+          value: "10s"
+        - name: TICK_INTERVAL
+          value: "1s"
+        ports:
+        - containerPort: 6379

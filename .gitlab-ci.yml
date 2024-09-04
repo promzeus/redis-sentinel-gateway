@@ -1,0 +1,21 @@
+image: docker:20.10.16
+services:
+  - docker:20.10.16-dind
+
+stages:
+  - build
+
+variables:
+  DOCKER_BUILDKIT: 1
+  CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
+
+build:
+  stage: build
+  before_script:
+    - docker context create buildctx
+    - docker buildx create --driver=docker-container --name=buildkit-builder --use buildctx
+    - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
+  script:
+    - docker buildx build --platform linux/amd64,linux/arm64 --pull -t ${CONTAINER_IMAGE} --push .
+  after_script:
+    - docker buildx rm buildkit-builder

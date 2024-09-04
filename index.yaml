@@ -6,10 +6,10 @@ entries:
       license: MIT
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-09-05T00:17:16.797496+02:00"
+    created: "2024-09-05T00:24:02.272093+02:00"
     description: A Helm chart for deploying Redis Sentinel Gateway to monitor master
       node changes and manage Kubernetes Endpoints.
-    digest: 977fb9b94e05d5fd7f8fc1d5d30ef4e44b2bcda5a2099687a76fc9ce3062cb25
+    digest: a6bb2f24baa38824be8cae652e0fffcb310bdcc5de7acbcc8c2807cae012caff
     home: https://github.com/promzeus/redis-sentinel-gateway
     icon: https://promzeus.github.io/redis-sentinel-gateway/logo.png
     keywords:
@@ -30,4 +30,4 @@ entries:
     urls:
     - https://promzeus.github.io/redis-sentinel-gateway/redis-sentinel-gateway-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-05T00:17:16.796007+02:00"
+generated: "2024-09-05T00:24:02.270622+02:00"

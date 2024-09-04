@@ -2,7 +2,7 @@
 # Redis Sentinel Gateway 🚀
 
 <p align="center">
-  <img src="https://promzeus.github.io/redis-sentinel-gateway/logo.png" alt="Logo">
+  <img src="https://promzeus.github.io/redis-sentinel-gateway/docs/logo.png" alt="Logo">
 </p>
 
 **Redis Sentinel Gateway** is a lightweight Go application designed to monitor Redis Sentinel for master node changes and automatically update Kubernetes Endpoints based on these changes. It simplifies the failover process by serving as a single point of entry for Redis, allowing clients to avoid dealing with Sentinel logic directly.

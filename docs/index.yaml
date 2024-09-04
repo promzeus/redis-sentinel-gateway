@@ -6,10 +6,10 @@ entries:
       license: MIT
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-09-05T00:12:50.165495+02:00"
+    created: "2024-09-05T00:17:16.797496+02:00"
     description: A Helm chart for deploying Redis Sentinel Gateway to monitor master
       node changes and manage Kubernetes Endpoints.
-    digest: 90042150e5fd3151aa03e34b37951bfe8eacdcab1d860f2f6197dec18a368139
+    digest: 977fb9b94e05d5fd7f8fc1d5d30ef4e44b2bcda5a2099687a76fc9ce3062cb25
     home: https://github.com/promzeus/redis-sentinel-gateway
     icon: https://promzeus.github.io/redis-sentinel-gateway/logo.png
     keywords:
@@ -30,33 +30,4 @@ entries:
     urls:
     - https://promzeus.github.io/redis-sentinel-gateway/redis-sentinel-gateway-1.0.0.tgz
     version: 1.0.0
-  - annotations:
-      category: Monitoring
-      license: MIT
-    apiVersion: v2
-    appVersion: 1.0.0
-    created: "2024-09-05T00:12:50.165954+02:00"
-    description: A Helm chart for deploying Redis Sentinel Gateway to monitor master
-      node changes and manage Kubernetes Endpoints.
-    digest: 0ee545a188b20b120940b5d3d7fd2a0f6b88cbae1356737f1ff97bf21257ce33
-    home: https://github.com/promzeus/redis-sentinel-gateway
-    icon: https://promzeus.github.io/redis-sentinel-gateway/assets/logo.png
-    keywords:
-    - redis
-    - sentinel
-    - gateway
-    - failover
-    - kubernetes
-    - endpoint
-    - operator
-    maintainers:
-    - email: promzeus@gmail.com
-      name: Dmytro Onyshko
-      url: https://github.com/promzeus
-    name: redis-sentinel-gateway
-    sources:
-    - https://github.com/promzeus/redis-sentinel-gateway
-    urls:
-    - https://promzeus.github.io/redis-sentinel-gateway/docs/redis-sentinel-gateway-1.0.0.tgz
-    version: 1.0.0
-generated: "2024-09-05T00:12:50.164124+02:00"
+generated: "2024-09-05T00:17:16.796007+02:00"

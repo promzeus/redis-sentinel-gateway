@@ -27,8 +27,9 @@ keywords:
   - failover
   - kubernetes
   - endpoint
+  - operator
 
-icon: https://raw.githubusercontent.com/promzeus/redis-sentinel-gateway/main/assets/logo.jpg
+icon: https://github.com/promzeus/redis-sentinel-gateway/blob/cfacd86da118b676b5b06d428f367a72630447ea/assets/logo.jpg
 
 # Annotations to help users understand the chart
 annotations:

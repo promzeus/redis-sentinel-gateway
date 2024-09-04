@@ -2,11 +2,10 @@ replicaCount: 2
 
 # Environment variables for the application
 env:
-  SERVICE_NAME: "redis-failover"
+  SERVICE_NAME: "redis-gateway"
   SENTINEL_ADDR: "redis-sentinel-server:26379"
   MASTER_NAME: "mymaster"
-  NAMESPACE: "redis"
-  LEASE_NAME: "redis-failover-lease"
+  LEASE_NAME: "redis-gateway-lease"
   POLL_INTERVAL: "5s"  # Poll interval for checking Redis Sentinel changes
   TICK_INTERVAL: "1s"  # Interval for checking if an update needs to be applied
   REDIS_PASSWORD_SECRET_NAME: "redis-sentinel-server"  # Default secret name for Redis password
@@ -16,13 +15,11 @@ env:
 # Resource requests and limits for the container
 resources:
   requests:
-    cpu: "50m"
-    memory: "60Mi"
-    ephemeral-storage: "500Mi"
+    cpu: "10m"
+    memory: "10Mi"
   limits:
-    cpu: "100m"
-    memory: "60Mi"
-    ephemeral-storage: "500Mi"
+    cpu: "50m"
+    memory: "50Mi"
 
 # Labels for the pods
 podlabels: {}
@@ -34,7 +31,7 @@ nodeSelector: {}
   # Services: redis
 
 # Tolerations for the pods
-tolerations: {}
+tolerations: []
 # - key: "name"
 #   effect: "NoSchedule"
 
@@ -45,4 +42,5 @@ image:
   pullPolicy: "Always"
 
 # Service account name
-serviceAccountName: ""
+serviceAccount:
+  create: ture

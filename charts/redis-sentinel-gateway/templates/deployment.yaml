@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}
-  namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Release.Name }}
     {{- include ".labels" . | nindent 4 }}
@@ -19,9 +18,9 @@ spec:
       annotations:
         {{- toYaml .Values.podAnnotations | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "redis-sentinel-gateway.serviceAccountName" . }}
+      serviceAccountName: {{ include ".serviceAccountName" . }}
       containers:
-      - name: redis-sentinel-failover
+      - name: main
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
@@ -53,11 +52,9 @@ spec:
           requests:
             cpu: {{ .Values.resources.requests.cpu }}
             memory: {{ .Values.resources.requests.memory }}
-            ephemeral-storage: {{ .Values.resources.requests["ephemeral-storage"] }}
           limits:
             cpu: {{ .Values.resources.limits.cpu }}
             memory: {{ .Values.resources.limits.memory }}
-            ephemeral-storage: {{ .Values.resources.limits["ephemeral-storage"] }}
         ports:
         - containerPort: 6379
       nodeSelector:

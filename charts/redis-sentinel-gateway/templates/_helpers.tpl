@@ -62,7 +62,7 @@ Create the name of the service account to use.
 */}}
 {{- define ".serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
-    {{ default (include ".fullname" .) .Values.serviceAccount.name }}-sa
+    {{ default (include ".name" .) .Values.serviceAccount.name }}-sa
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}

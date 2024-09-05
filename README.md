@@ -44,12 +44,17 @@ The application is fully configurable via environment variables:
 
 Redis Sentinel Gateway provides a unique solution for managing Redis failover scenarios. Unlike other approaches that rely on complex integrations or higher latency options, this project is built with **low-latency** performance in mind. The gateway continuously monitors Redis Sentinel and instantly updates the Kubernetes Endpoints to reflect the current master node, ensuring minimal delay during failover events.
 
-This makes **Redis Sentinel Gateway** ideal for projects where low latency is critical, such as:
+This project is especially useful for legacy applications or older services where adding Sentinel support may not be possible. Many legacy systems either don’t have Sentinel support, or they rely on deprecated libraries that are difficult to maintain. With **Redis Sentinel Gateway**, there is no need to modify the application’s codebase to introduce Sentinel support, ensuring high availability without costly refactoring.
+
+During load tests and high traffic scenarios, other approaches using Sentinel proxies showed significant latency spikes. **Redis Sentinel Gateway** is optimized to minimize these spikes, making it ideal for high-performance environments.
+
+### Perfect for:
 
 - **Real-time applications**
 - **Financial systems**
 - **Gaming servers**
 - **High-performance microservices architectures**
+- **Legacy applications** that can't easily integrate Sentinel support
 
 ## ⚙️ How It Works
 

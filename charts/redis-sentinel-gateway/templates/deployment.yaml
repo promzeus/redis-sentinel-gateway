@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ include ".fullname" . }}
   labels:
-    app: {{ .Release.Name }}
+    app: {{ include ".fullname" . }}
     {{- include ".labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: {{ include ".fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: {{ include ".fullname" . }}
         {{- include ".labels" . | nindent 8 }}
       annotations:
         {{- toYaml .Values.podAnnotations | nindent 8 }}
@@ -36,7 +36,6 @@ spec:
             value: {{ .Values.env.POLL_INTERVAL }}
           - name: TICK_INTERVAL
             value: {{ .Values.env.TICK_INTERVAL }}
-
           {{- if .Values.env.REDIS_PASSWORD }}
           - name: REDIS_PASSWORD
             value: {{ .Values.env.REDIS_PASSWORD }}
@@ -47,7 +46,6 @@ spec:
                 name: {{ .Values.env.REDIS_PASSWORD_SECRET_NAME }}
                 key: {{ .Values.env.REDIS_PASSWORD_KEY }}
           {{- end }}
-          
         resources:
           requests:
             cpu: {{ .Values.resources.requests.cpu }}
@@ -55,8 +53,6 @@ spec:
           limits:
             cpu: {{ .Values.resources.limits.cpu }}
             memory: {{ .Values.resources.limits.memory }}
-        ports:
-        - containerPort: 6379
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
       tolerations:

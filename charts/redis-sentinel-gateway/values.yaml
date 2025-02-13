@@ -41,6 +41,9 @@ image:
   tag: "v1"
   pullPolicy: "Always"
 
+imagePullSecrets: {}
+  # - name: dockerhub-secret
+
 # Service account name
 serviceAccount:
   create: ture

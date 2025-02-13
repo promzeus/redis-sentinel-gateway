@@ -19,6 +19,10 @@ spec:
         {{- toYaml .Values.podAnnotations | nindent 8 }}
     spec:
       serviceAccountName: {{ include ".serviceAccountName" . }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
+      {{- end }}
       containers:
       - name: main
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
